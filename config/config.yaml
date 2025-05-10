@@ -1,0 +1,45 @@
+# GitHub API配置
+github:
+  api_token: ${GITHUB_TOKEN}  # 从环境变量读取
+  base_url: "https://api.github.com"
+  rate_limit:
+    max_retries: 3
+    retry_interval: 60  # 秒
+    
+# 数据获取设置
+fetch:
+  languages:
+    - python
+  min_stars: 100
+  time_range: "1d"  # 1d, 7d, 30d
+  max_repos_per_language: 10
+  
+# 输出设置
+output:
+  format: "markdown"  # markdown, html, json
+  template_dir: "templates"
+  output_dir: "data/daily"
+  
+# 日志设置
+logging:
+  level: "INFO"
+  file: "data/logs/collector.log"
+  rotation: "1 day"
+  retention: "30 days"
+
+# 插件配置
+plugins:
+  enabled:
+    - email_sender
+    - telegram_bot
+  
+  email:
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    sender: ${EMAIL_SENDER}
+    recipients:
+      - ${EMAIL_RECIPIENT}
+      
+  telegram:
+    bot_token: ${TELEGRAM_BOT_TOKEN}
+    chat_id: ${TELEGRAM_CHAT_ID} 
