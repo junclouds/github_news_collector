@@ -11,7 +11,7 @@ fetch:
   languages:
     - python
   min_stars: 100
-  time_range: 3  # 单位天
+  time_range: 7  # 单位天
   max_repos_per_language: 10
   
 # 输出设置
