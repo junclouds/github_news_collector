@@ -47,7 +47,7 @@ class NewsCollector:
         
         repos = await self.github_api.search_trending_repos(
             language=language,
-            days=1,
+            days=config.get('fetch.time_range', 1),
             min_stars=config.get('fetch.min_stars', 100),
             per_page=config.get('fetch.max_repos_per_language', 10)
         )

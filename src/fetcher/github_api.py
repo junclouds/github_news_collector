@@ -72,7 +72,7 @@ class GitHubAPI:
             List[Dict]: 仓库信息列表
         """
         date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
-        query = f"language:{language} created:>={date} stars:>=1"
+        query = f"language:{language} created:>={date} stars:>={min_stars}"
         
         params = {
             'q': query,
