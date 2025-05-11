@@ -58,7 +58,7 @@ cd github_news_collector
 
 2. 安装依赖：
 ```bash
-pip install -e .
+pip install -r requirements.txt
 ```
 
 3. 创建配置文件：
