@@ -10,9 +10,9 @@ from pathlib import Path
 
 from loguru import logger
 
-from .fetcher.github_api import GitHubAPI
-from .formatter.markdown import MarkdownFormatter
-from .utils.config import config
+from src.fetcher.github_api import GitHubAPI
+from src.formatter.markdown import MarkdownFormatter
+from src.utils.config import config
 
 class NewsCollector:
     def __init__(self):

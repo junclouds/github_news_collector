@@ -17,7 +17,7 @@ from src.utils.config import config
 async def collect_yesterday():
     """收集昨天的热门项目"""
     # 修改配置以收集昨天的数据
-    config.config['fetch']['time_range'] = '1d'
+    config.config['fetch']['time_range'] = 1
     
     # 确保必要的目录存在
     os.makedirs(project_root / 'data' / 'daily', exist_ok=True)
