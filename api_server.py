@@ -61,24 +61,34 @@ def latest_update():
         return build_cors_preflight_response()
     
     # 处理 GET 请求
-    file_path, filename = get_latest_file_path()
-    
-    if not file_path or not os.path.exists(file_path):
-        return build_cors_actual_response(jsonify({
-            "error": "文件不存在",
-            "status": 404
-        }))
-    
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # 返回文件内容和查看链接
-    response_data = {
-        "content": content,
-        "view_url": f"http://127.0.0.1:5000/view-markdown?filename={filename}"
-    }
+    try:
+        # 强制生成新的报告
+        file_path, filename = get_latest_file_path()
         
-    return build_cors_actual_response(jsonify(response_data))
+        if not file_path or not os.path.exists(file_path):
+            logger.error("无法生成或找到报告文件")
+            return build_cors_actual_response(jsonify({
+                "error": "无法生成报告文件",
+                "status": 500
+            }))
+        
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # 返回文件内容和查看链接
+        response_data = {
+            "content": content,
+            "view_url": f"http://127.0.0.1:5000/view-markdown?filename={filename}",
+            "generated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+            
+        return build_cors_actual_response(jsonify(response_data))
+    except Exception as e:
+        logger.error(f"生成报告时发生错误: {str(e)}")
+        return build_cors_actual_response(jsonify({
+            "error": f"生成报告时发生错误: {str(e)}",
+            "status": 500
+        }))
 
 @app.route('/view-markdown', methods=['GET'])
 def view_markdown():
